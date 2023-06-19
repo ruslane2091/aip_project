@@ -11,34 +11,34 @@ std::vector<SOCKET*> clientSockets;
 std::vector<std::string> clientNicknames;
 
 void ClientHandler(SOCKET* clientSocket, std::string clientNickname) {
-    // é‚Ø‡†¢™† Ø‡®¢•‚·‚¢®Ô ™´®•≠‚„
-    std::string welcomeMessage = "ÑÆ°‡Æ ØÆ¶†´Æ¢†‚Ï ¢ Á†‚, " + clientNickname + "!";
+    // –û—Ç–ø—Ä–∞–≤–∫–∞ –ø—Ä–∏–≤–µ—Ç—Å—Ç–≤–∏—è –∫–ª–∏–µ–Ω—Ç—É
+    std::string welcomeMessage = "–î–æ–±—Ä–æ –ø–æ–∂–∞–ª–æ–≤–∞—Ç—å –≤ —á–∞—Ç, " + clientNickname + "!";
     send(*clientSocket, welcomeMessage.c_str(), welcomeMessage.size() + 1, 0);
 
     char buf[4096];
     while (true) {
         ZeroMemory(buf, 4096);
 
-        // è‡®•¨ ·ÆÆ°È•≠®Ô Æ‚ ™´®•≠‚†
+        // –ü—Ä–∏–µ–º —Å–æ–æ–±—â–µ–Ω–∏—è –æ—Ç –∫–ª–∏–µ–Ω—Ç–∞
         int bytesReceived = recv(*clientSocket, buf, 4096, 0);
         if (bytesReceived == SOCKET_ERROR) {
-            std::cerr << "éË®°™† Ø‡®•¨† ·ÆÆ°È•≠®Ô Æ‚ ™´®•≠‚†. äÆ§ ÆË®°™®: " << WSAGetLastError() << std::endl;
+            std::cerr << "–û—à–∏–±–∫–∞ –ø—Ä–∏–µ–º–∞ —Å–æ–æ–±—â–µ–Ω–∏—è –æ—Ç –∫–ª–∏–µ–Ω—Ç–∞. –ö–æ–¥ –æ—à–∏–±–∫–∏: " << WSAGetLastError() << std::endl;
             break;
         }
 
         if (bytesReceived == 0) {
-            // ä´®•≠‚ Æ‚™´ÓÁ®´·Ô
-            std::cout << clientNickname << " Æ‚™´ÓÁ®´·Ô" << std::endl;
+            // –ö–ª–∏–µ–Ω—Ç –æ—Ç–∫–ª—é—á–∏–ª—Å—è
+            std::cout << clientNickname << " –æ—Ç–∫–ª—é—á–∏–ª—Å—è" << std::endl;
 
-            // é‚Ø‡†¢™† „¢•§Æ¨´•≠®Ô Æ Æ‚™´ÓÁ•≠®® ™´®•≠‚† ¢·•¨ Æ·‚†´Ï≠Î¨ ™´®•≠‚†¨
-            std::string disconnectMessage = clientNickname + " ØÆ™®≠„´ Á†‚.";
+            // –û—Ç–ø—Ä–∞–≤–∫–∞ —É–≤–µ–¥–æ–º–ª–µ–Ω–∏—è –æ –æ—Ç–∫–ª—é—á–µ–Ω–∏–∏ –∫–ª–∏–µ–Ω—Ç–∞ –≤—Å–µ–º –æ—Å—Ç–∞–ª—å–Ω—ã–º –∫–ª–∏–µ–Ω—Ç–∞–º
+            std::string disconnectMessage = clientNickname + " –ø–æ–∫–∏–Ω—É–ª —á–∞—Ç.";
             for (auto it = clientSockets.begin(); it != clientSockets.end(); ++it) {
                 if (*it != clientSocket) {
                     send(**it, disconnectMessage.c_str(), disconnectMessage.size() + 1, 0);
                 }
             }
 
-            // ì§†´•≠®• ·Æ™•‚† ™´®•≠‚† ® ≠®™† ®ß ·ÆÆ‚¢•‚·‚¢„ÓÈ®Â ¢•™‚Æ‡Æ¢
+            // –£–¥–∞–ª–µ–Ω–∏–µ —Å–æ–∫–µ—Ç–∞ –∫–ª–∏–µ–Ω—Ç–∞ –∏ –Ω–∏–∫–∞ –∏–∑ —Å–æ–æ—Ç–≤–µ—Ç—Å—Ç–≤—É—é—â–∏—Ö –≤–µ–∫—Ç–æ—Ä–æ–≤
             auto it = std::find(clientSockets.begin(), clientSockets.end(), clientSocket);
             if (it != clientSockets.end()) {
                 clientSockets.erase(it);
@@ -48,10 +48,10 @@ void ClientHandler(SOCKET* clientSocket, std::string clientNickname) {
             break;
         }
 
-        // ÇÎ¢Æ§ ØÆ´„Á•≠≠Æ£Æ ·ÆÆ°È•≠®Ô ØÆ´ÏßÆ¢†‚•´Ô
-        std::cout << "èÆ´„Á•≠Æ ·ÆÆ°È•≠®• Æ‚ " << clientNickname << ": " << std::string(buf, 0, bytesReceived) << std::endl;
+        // –í—ã–≤–æ–¥ –ø–æ–ª—É—á–µ–Ω–Ω–æ–≥–æ —Å–æ–æ–±—â–µ–Ω–∏—è –ø–æ–ª—å–∑–æ–≤–∞—Ç–µ–ª—è
+        std::cout << "–ü–æ–ª—É—á–µ–Ω–æ —Å–æ–æ–±—â–µ–Ω–∏–µ –æ—Ç " << clientNickname << ": " << std::string(buf, 0, bytesReceived) << std::endl;
 
-        // é‚Ø‡†¢™† ·ÆÆ°È•≠®Ô ¢·•¨ Æ·‚†´Ï≠Î¨ ™´®•≠‚†¨
+        // –û—Ç–ø—Ä–∞–≤–∫–∞ —Å–æ–æ–±—â–µ–Ω–∏—è –≤—Å–µ–º –æ—Å—Ç–∞–ª—å–Ω—ã–º –∫–ª–∏–µ–Ω—Ç–∞–º
         std::string messageToSend = clientNickname + ": " + std::string(buf, 0, bytesReceived);
         for (auto it = clientSockets.begin(); it != clientSockets.end(); ++it) {
             if (*it != clientSocket) {
@@ -60,31 +60,31 @@ void ClientHandler(SOCKET* clientSocket, std::string clientNickname) {
         }
     }
 
-    // á†™‡Î‚®• ·Æ™•‚† ™´®•≠‚†
+    // –ó–∞–∫—Ä—ã—Ç–∏–µ —Å–æ–∫–µ—Ç–∞ –∫–ª–∏–µ–Ω—Ç–∞
     closesocket(*clientSocket);
     delete clientSocket;
 }
 
 int main() {
-    // à≠®Ê®†´®ß†Ê®Ô Winsock
+    // –ò–Ω–∏—Ü–∏–∞–ª–∏–∑–∞—Ü–∏—è Winsock
     WSADATA wsData;
     WORD ver = MAKEWORD(2, 2);
 
     int wsResult = WSAStartup(ver, &wsData);
     if (wsResult != 0) {
-        std::cerr << "éË®°™† ®≠®Ê®†´®ß†Ê®® Winsock. äÆ§ ÆË®°™®: " << wsResult << std::endl;
+        std::cerr << "–û—à–∏–±–∫–∞ –∏–Ω–∏—Ü–∏–∞–ª–∏–∑–∞—Ü–∏–∏ Winsock. –ö–æ–¥ –æ—à–∏–±–∫–∏: " << wsResult << std::endl;
         return -1;
     }
 
-    // ëÆß§†≠®• ·Æ™•‚†
+    // –°–æ–∑–¥–∞–Ω–∏–µ —Å–æ–∫–µ—Ç–∞
     SOCKET listening = socket(AF_INET, SOCK_STREAM, 0);
     if (listening == INVALID_SOCKET) {
-        std::cerr << "éË®°™† ·Æß§†≠®Ô ·Æ™•‚†. äÆ§ ÆË®°™®: " << WSAGetLastError() << std::endl;
+        std::cerr << "–û—à–∏–±–∫–∞ —Å–æ–∑–¥–∞–Ω–∏—è —Å–æ–∫–µ—Ç–∞. –ö–æ–¥ –æ—à–∏–±–∫–∏: " << WSAGetLastError() << std::endl;
         WSACleanup();
         return -1;
     }
 
-    // è‡®¢Ôß™† ·Æ™•‚† ™ IP-†§‡•·„ ® ØÆ‡‚„
+    // –ü—Ä–∏–≤—è–∑–∫–∞ —Å–æ–∫–µ—Ç–∞ –∫ IP-–∞–¥—Ä–µ—Å—É –∏ –ø–æ—Ä—Ç—É
     sockaddr_in hint;
     hint.sin_family = AF_INET;
     hint.sin_port = htons(54000);
@@ -92,41 +92,41 @@ int main() {
 
     bind(listening, (sockaddr*)&hint, sizeof(hint));
 
-    // é¶®§†≠®• ·Æ•§®≠•≠®© ™´®•≠‚Æ¢
+    // –û–∂–∏–¥–∞–Ω–∏–µ —Å–æ–µ–¥–∏–Ω–µ–Ω–∏–π –∫–ª–∏–µ–Ω—Ç–æ–≤
     listen(listening, SOMAXCONN);
 
-    std::cout << "ë•‡¢•‡ ß†Ø„È•≠. é¶®§†≠®• ØÆ§™´ÓÁ•≠®© ™´®•≠‚Æ¢..." << std::endl;
+    std::cout << "–°–µ—Ä–≤–µ—Ä –∑–∞–ø—É—â–µ–Ω. –û–∂–∏–¥–∞–Ω–∏–µ –ø–æ–¥–∫–ª—é—á–µ–Ω–∏–π –∫–ª–∏–µ–Ω—Ç–æ–≤..." << std::endl;
 
-    // ñ®™´ Æ¶®§†≠®Ô ·Æ•§®≠•≠®© ™´®•≠‚Æ¢
+    // –¶–∏–∫–ª –æ–∂–∏–¥–∞–Ω–∏—è —Å–æ–µ–¥–∏–Ω–µ–Ω–∏–π –∫–ª–∏–µ–Ω—Ç–æ–≤
     while (true) {
         sockaddr_in client;
         int clientSize = sizeof(client);
 
-        // è‡®≠Ô‚®• ≠Æ¢Æ£Æ ·Æ•§®≠•≠®Ô
+        // –ü—Ä–∏–Ω—è—Ç–∏–µ –Ω–æ–≤–æ–≥–æ —Å–æ–µ–¥–∏–Ω–µ–Ω–∏—è
         SOCKET* clientSocket = new SOCKET(accept(listening, (sockaddr*)&client, &clientSize));
 
-        // èÆ´„Á•≠®• ≠®™† ™´®•≠‚†
+        // –ü–æ–ª—É—á–µ–Ω–∏–µ –Ω–∏–∫–∞ –∫–ª–∏–µ–Ω—Ç–∞
         char nicknameBuf[4096];
         ZeroMemory(nicknameBuf, 4096);
         int nicknameBytesReceived = recv(*clientSocket, nicknameBuf, 4096, 0);
         std::string clientNickname = std::string(nicknameBuf, 0, nicknameBytesReceived);
 
-        // ÑÆ°†¢´•≠®• ·Æ™•‚† ™´®•≠‚† ® ≠®™† ¢ ·ÆÆ‚¢•‚·‚¢„ÓÈ®• ¢•™‚Æ‡Î
+        // –î–æ–±–∞–≤–ª–µ–Ω–∏–µ —Å–æ–∫–µ—Ç–∞ –∫–ª–∏–µ–Ω—Ç–∞ –∏ –Ω–∏–∫–∞ –≤ —Å–æ–æ—Ç–≤–µ—Ç—Å—Ç–≤—É—é—â–∏–µ –≤–µ–∫—Ç–æ—Ä—ã
         clientSockets.push_back(clientSocket);
         clientNicknames.push_back(clientNickname);
 
-        // ëÆß§†≠®• ≠Æ¢Æ£Æ ØÆ‚Æ™† §´Ô Æ°‡†°Æ‚™® ™´®•≠‚†
+        // –°–æ–∑–¥–∞–Ω–∏–µ –Ω–æ–≤–æ–≥–æ –ø–æ—Ç–æ–∫–∞ –¥–ª—è –æ–±—Ä–∞–±–æ—Ç–∫–∏ –∫–ª–∏–µ–Ω—Ç–∞
         std::thread clientThread(ClientHandler, clientSocket, clientNickname);
         clientThread.detach();
 
-        // ÇÎ¢Æ§ ®≠‰Æ‡¨†Ê®® Æ ≠Æ¢Æ¨ ™´®•≠‚•
-        std::cout << "èÆ§™´ÓÁ®´·Ô ≠Æ¢Î© ™´®•≠‚: " << clientNickname << std::endl;
+        // –í—ã–≤–æ–¥ –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏–∏ –æ –Ω–æ–≤–æ–º –∫–ª–∏–µ–Ω—Ç–µ
+        std::cout << "–ü–æ–¥–∫–ª—é—á–∏–ª—Å—è –Ω–æ–≤—ã–π –∫–ª–∏–µ–Ω—Ç: " << clientNickname << std::endl;
     }
 
-    // á†™‡Î‚®• ·Æ™•‚† Ø‡Æ·´„Ë®¢†≠®Ô
+    // –ó–∞–∫—Ä—ã—Ç–∏–µ —Å–æ–∫–µ—Ç–∞ –ø—Ä–æ—Å–ª—É—à–∏–≤–∞–Ω–∏—è
     closesocket(listening);
 
-    // éÁ®·‚™† Winsock
+    // –û—á–∏—Å—Ç–∫–∞ Winsock
     WSACleanup();
 
     return 0;
